@@ -1,0 +1,435 @@
+body {
+  margin: 0;
+  background: #eee;
+  font-family: 'Open Sans', sans-serif;
+}
+a {
+  color: inherit;
+}
+code {
+  border-radius: 4px;
+  background: #d5dbdd;
+  padding: 3px 6px;
+  font-family: monospace;
+  font-size: 16px;
+}
+blockquote {
+  font-style: italic;
+}
+header {
+  width: 100%;
+  height: 80px;
+  background: #111;
+  border-bottom: 1px solid #000;
+  font-family: 'Montserrat', sans-serif;
+}
+header > div {
+  margin: 0 auto;
+  max-width: 1000px;
+  height: 80px;
+  padding: 0 20px;
+}
+header > div > .logo {
+  float: left;
+  display: block;
+  height: 80px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 80px;
+  text-decoration: none;
+  text-transform: lowercase;
+}
+header > div > nav {
+  display: block;
+  float: right;
+}
+header > div > nav > a {
+  height: 40px;
+  padding: 0 20px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 80px;
+  text-decoration: none;
+  text-transform: lowercase;
+}
+header > div > nav > a.selected {
+  color: #bd3200;
+}
+.subnavlinks {
+  background: #eee;
+  border-bottom: 1px solid #ccc;
+}
+.subnavlinks > div {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 0 20px;
+}
+.subnavlinks > div:before,
+.subnavlinks > div:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.subnavlinks > div > .subnavlink {
+  display: block;
+  float: left;
+  padding: 15px 20px 15px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: lowercase;
+}
+.subnavlinks > div > .subnavlink.selected {
+  color: #111;
+  font-weight: 600;
+}
+.subnavlinks > div > .subnavlink:hover {
+  text-decoration: underline;
+}
+.hero {
+  background-image: url("images/bg-building.jpg");
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+}
+.hero:before,
+.hero:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.hero > h1 {
+  display: inline-block;
+  margin: 200px auto 250px;
+  background: rgba(0,0,0,0.8);
+  padding: 12px 20px;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 64px;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 0 8px #000;
+  text-transform: uppercase;
+}
+.hero > h1 > em {
+  color: #bd3200;
+  font-style: normal;
+}
+.section {
+  padding: 60px 20px;
+  color: #111;
+  text-align: center;
+}
+.section:before,
+.section:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.section.alt {
+  background: #111;
+  color: #fff;
+}
+.section.alt > div {
+  font-weight: 300;
+}
+.section.alt > div strong {
+  font-weight: 600;
+}
+.section.highlight {
+  background: #a32c00;
+  color: #fff;
+}
+.section > h1 {
+  display: block;
+  margin: 0 auto 60px;
+  max-width: 1000px;
+  font-size: 48px;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+.section > h1 em {
+  color: #a32c00;
+  font-style: normal;
+}
+.section > h1:after {
+  display: block;
+  content: "_____";
+  line-height: 0.2;
+}
+.section > h2 {
+  display: block;
+  margin: 0 auto 60px;
+  max-width: 1000px;
+  font-size: 36px;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+.section > h2 em {
+  color: #a32c00;
+  font-style: normal;
+}
+.section > h2:after {
+  display: block;
+  content: "_____";
+  line-height: 0.2;
+}
+.section > div {
+  display: block;
+  margin: 20px auto;
+  max-width: 1000px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.section > div.checkmark {
+  font-weight: 600;
+  text-align: left;
+}
+.section > div.checkmark:before {
+  content: "\2713";
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  width: 40px;
+  font-size: 2em;
+  font-weight: 400;
+  line-height: 0;
+}
+.section > div.above-checkmarks {
+  margin-bottom: 40px;
+  text-align: left;
+}
+.section > div.below-checkmark {
+  max-width: 920px;
+  text-align: left;
+}
+.section > div.testimonial:before,
+.section > div.testimonial:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.section > div.testimonial > .left {
+  float: left;
+}
+.section > div.testimonial > .left .logo {
+  width: 275px;
+  max-width: 100%;
+  padding: 35px 0;
+}
+.section > div.testimonial > .right {
+  float: left;
+  width: 50%;
+  width: calc(100% - 275px - 40px);
+  padding-left: 40px;
+}
+.section > div.call-to-action {
+  padding-top: 40px;
+}
+.section > div .quote-text {
+  font-style: italic;
+  text-indent: 20px;
+}
+.section > div strong {
+  font-weight: 700;
+}
+footer {
+  padding: 30px 0;
+  background: #111;
+  color: #fff;
+}
+footer > div {
+  margin: 0 auto;
+  max-width: 1000px;
+  text-align: center;
+}
+footer > div:before,
+footer > div:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+footer > div > .social-media {
+  float: right;
+  padding-right: 20px;
+  font-weight: 600;
+}
+footer > div > .social-media > a {
+  display: block;
+  padding: 5px 0;
+}
+footer > div > .social-media > a:before,
+footer > div > .social-media > a:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+footer > div > .social-media > a > .fa {
+  display: block;
+  float: left;
+  margin: 0 10px;
+  font-size: 24px;
+}
+footer > div > .social-media > a > span {
+  display: block;
+  float: left;
+  line-height: 24px;
+}
+footer > div > .copyright {
+  padding: 7px 0;
+  font-size: 14px;
+  font-weight: 300;
+}
+.align-left {
+  text-align: left;
+}
+.align-center {
+  text-align: center;
+}
+.align-right {
+  text-align: right;
+}
+.button {
+  display: inline-block;
+  border: 2px solid #333;
+  border-radius: 5px;
+  background: #fff;
+  padding: 20px 40px;
+  color: #333;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+.button:disabled {
+  background: #aaa;
+  color: #444;
+  cursor: default;
+}
+.button.primary {
+  border: 2px solid #0078a3;
+  background: #0078a3;
+  color: #fff;
+}
+.button.primary:disabled {
+  border-color: #81acbb;
+  background: #81acbb;
+}
+.button > .fa {
+  padding-right: 7px;
+}
+input[type=text],
+input[type=email] {
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  padding: 8px 10px;
+}
+input[type=text]:focus,
+input[type=email]:focus {
+  border: 1px solid #000;
+}
+
+pre {
+  display: block;
+  overflow: auto;
+  margin: 0 40px;
+  border: 1px solid #9bc5d4;
+  border-radius: 5px;
+  background: #fff;
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+pre > code {
+  display: inline-block;
+  border-radius: 0;
+  background: none;
+  padding: 0;
+  padding: 10px 15px;
+  color: #000;
+  font-size: 14px;
+}
+
+.highlight {
+  margin: 0;
+/* Remove background color applied in Pygments-generated CSS */
+  background: none !important;
+}
+.post-meta {
+  color: #888;
+  font-size: 16px;
+}
+.contact-form label {
+  display: block;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+.contact-form .submit-wrapper {
+  margin: 10px 0;
+}
+.subscribe-cta {
+  display: block;
+  margin: 80px auto 0;
+}
+.subscribe-cta label {
+  display: none;
+}
+.subscribe-cta > div {
+  margin: 10px 0;
+}
+@media (max-width: 800px) {
+  header > div > nav > a {
+    padding: 0 10px;
+  }
+  .hero > h1 {
+    font-size: 48px;
+  }
+  .post-content pre {
+    margin: 0;
+  }
+  .section > div.testimonial > .left {
+    float: none;
+    text-align: center;
+  }
+  .section > div.testimonial > .right {
+    float: none;
+    width: auto;
+    padding: 0;
+  }
+}
+@media (max-width: 650px) {
+  header {
+    margin-bottom: 60px;
+  }
+  header > div {
+    padding: 0;
+  }
+  header > div > .logo {
+    padding: 0 20px;
+    text-align: center;
+  }
+  header > div > nav {
+    width: 100%;
+    border: 1px solid #000;
+    border-style: solid none;
+    background: #111;
+    text-align: center;
+  }
+  header > div > nav:before,
+  header > div > nav:after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  header > div > nav > a {
+    padding: 0 10px;
+  }
+  .hero > h1 {
+    font-size: 36px;
+  }
+}

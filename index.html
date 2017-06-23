@@ -1,1 +1,107 @@
-Hello World
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>RCE vulnerability in phpunit</title>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans:300,300i,400,400i,600,700,700i|Raleway:100,200,300,400,600,700">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github-gist.min.css">
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+	</head>
+	<body>
+		<div class="section align-left">
+			<div class="post-header">
+				<h1 class="post-title">RCE vulnerability in phpunit</h1>
+				<p class="post-meta">24 Jun 2017</p>
+			</div>
+
+			<div class="post-content">
+				<a href="https://twitter.com/vulnbusters" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @vulnbusters</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+				</script>
+				<h2>TL;DR</h2>
+				<p>
+					There is a vulnerability in <code>phpunit</code>, a widely used testing framework for PHP. The vulnerability can lead to remote code execution (RCE).
+				</p>
+				<p>
+					Usually <code>phpunit</code> is set up using <code>composer</code>, a very popular dependency manager for PHP. In most cases <code>phpunit</code> isn't required for the production environment, but nonetheless it is installed. Placing composer modules into web accessible directory is another common mistake that allows direct exploitation of this vulnerability.
+				</p>
+				<h2>FAQ</h2>
+				<h3>Is my site vulnerable?</h3>
+				<p>
+					If you are using composer look at <code>/vendor/composer/installed.json</code> for installed version of phpunit. The vulnerability exists in the versions from <code>4.8.19</code> till <code>4.8.27</code> and from <code>5.0.10</code> till <code>5.6.2</code> inclusive.
+				<p>
+					If you are using phpunit directly look at <code>/phpunit/src/Util/PHP/eval-stdin.php</code>If the code looks like:
+				<pre><code class="php">eval('?>' . \file_get_contents('php://stdin'));</code></pre>
+				or
+				<pre><code class="php">eval('?>' . file_get_contents('php://stdin'));</code></pre>
+				</p>
+				<p>
+					you <em style="color: green">aren't vulnerable</em>.
+				</p>
+				<p>
+					If this file doesn't exist you <em style="color: green">aren't vulnerable</em>.
+				</p>
+				<p>
+					If the code looks like:
+				<pre><code class="php">eval('?>'.file_get_contents('php://input'));</code></pre>
+				</p>
+				<p>
+ 					you <em style="color: red">are vulnerable</em>.
+				</p>
+				<h3>How to fix it?</h3>
+				<p>
+					There are several ways to fix or mitigate this vulnerability:
+				</p>
+				<ol>
+					<li>
+						<p>
+							Remove <code>phpunit</code> as well as other dev packages. In most cases they aren't required for the production environment.
+						</p>
+						<pre style="margin-left: 0"><code class="bash">$ composer install --no-dev</code></pre>
+					</li>
+					<li>
+						<p>
+							Update <code>phpunit</code>. Versions from <code>4.8.28</code>, from <code>5.6.3</code> and <code>6.x</code> aren't vulnerable.
+						</p>
+						<pre style="margin-left: 0"><code class="bash">$ composer update</code></pre>
+					</li>
+					<li>
+						<p>
+							Apply the patch manually. Replace code of <code>eval-stdin.php</code> to this one:
+						</p>
+						<pre style="margin-left: 0"><code class="php">eval('?>' . \file_get_contents('php://stdin'));</code></pre>
+					</li>
+					<li>
+						<p>
+							Disable direct access to the <code>composer</code> packages. For that place <code>.htaccess</code> file to <code>/vendor</code> folder:
+						</p>
+						<pre style="margin-left: 0"><code class="apache">Deny from all</code></pre>
+					</li>
+				</ol>
+				<h3>How can I avoid such a problem in the future?</h3>
+				<p>
+					If you are developer avoid to place composer modules in the web accessible directory.
+				</p>
+				<h3>Let's name this vulnerability "ScandalEval"!</h3>
+				<p>
+					Not this time. <em>Fix and patch, boys, fix and patch</em>.
+				</p>
+				<h3>What is "Vulnbusters Meter" and "Vulnbusters Proton"?</h3>
+				<p>They are two bots used by Vulnbusters team for harvesting vulnerable sites (<code>Meter</code>) and for enforcing the patch for the vulnerable sites (<code>Proton</code>). You can see their names in <code>User-Agent</code> header. <code>Meter</code> and <code>Proton</code> can connect only from IP addresses belong to <code>vulnbusters.net</code> domain. You can check IP via reverse DNS:
+				</p>
+				<pre><code class="bash">$ dig -x IP.AD.DRE.SS</code></pre>
+				<h3>Wait a minute, do you patch sites without owner permission?</h3>
+				<p>
+					Yes, we do. But only when vulnerability is dangerous for the entire Internet community. Before patching we are trying to connect site owner.
+				</p>
+			</div>
+	</body>
+</html>
